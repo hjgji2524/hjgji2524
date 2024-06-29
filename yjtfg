@@ -1,0 +1,42 @@
+import 'package:mysql1/mysql1.dart';
+ 
+void main() async {
+  const databaseName = 'info';
+  const tableName = 'bondfunds';
+  // 设置数据库连接参数
+  final settings = ConnectionSettings(
+    host: '127.0.0.1',
+    port: 3306,
+    user: 'root',
+    password: 'root',
+    db: databaseName,
+  );
+ 
+  mytype(type) {
+    dynamic itype = type.runtimeType.toString(); //
+    print('类型：$type的类型是$itype');
+    return itype;
+  }
+ 
+  // 创建数据库连接
+  var conn = await MySqlConnection.connect(settings);
+ 
+  try {
+    // 执行SQL查询
+    var results = await conn.query('SELECT * FROM $tableName');
+    List fundList = [];
+    for (var row in results) {
+      //fundList.add((row['fundName'].substring(2),row['capital']));
+      fundList.add([row['fundName'],row['capital']]);
+    }
+ 
+    fundList.sort((a,b)=>a[1].compareTo(b[1])*-1);
+    print(fundList);
+    print(fundList.length);
+ 
+    // 如果需要执行插入、更新或删除等操作，可以类似地构造SQL语句并使用conn.execute()
+  } finally {
+    // 关闭数据库连接
+    await conn.close();
+  }
+}
