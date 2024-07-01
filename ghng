@@ -1,0 +1,13 @@
+import cv2
+from matplotlib import pyplot as plt
+import os
+import numpy as np
+from PIL import ImageFont, ImageDraw, Image
+def plt_show0(img):
+    b,g,r = cv2.split(img)
+    img = cv2.merge([r, g, b])
+    plt.imshow(img)
+    plt.show()
+def plt_show(img):
+    plt.imshow(img,cmap='gray')
+    plt.show()
