@@ -1,0 +1,30 @@
+ArrayList paras=new ArrayList();
+string refSql="";
+bool HasTitle=false;
+System.Data.CommandType ct=System.Data.CommandType.Text;
+ 
+ 
+public string RepeatHtml(string Html)
+{
+                string rv = "";
+                object[,] ReaderData = GetReaderData("SqlServer","您的连接串",refSql,paras,hastitle,ct);
+                if (ReaderData == null) return "";
+                if (HasTitle == true)
+                {
+                    for (int k = 0; k < ReaderData.GetLength(1); k++) //列
+                    {
+                        string fieldname = ReaderData[0,k].ToString();
+                        Html = Html.Replace("{" + fieldname + "}", "{" + k.ToString() + "}");
+                    }
+                }
+                for (int i = (HasTitle == true ? 1 : 0); i < ReaderData.GetLength(0); i++) //行
+                {
+                    object[] repl = new object[ReaderData.GetLength(1)];
+                    for (int j = 0; j < ReaderData.GetLength(1); j++) //列
+                    {
+                        repl[j] = ReaderData[i, j].ToString() ;
+                    }
+                    rv+=string.Format(Html, repl);
+                }
+                return rv;
+}//RepeatHtml
