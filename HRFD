@@ -1,0 +1,82 @@
+from PyQt5.Qt import *
+
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("事件消息")
+        self.resize(500, 500)
+        self.setup_ui()
+
+    def setup_ui(self):
+        pass
+
+    #初始化窗口后就触发
+    def showEvent(self, QShowEvent):
+        print("窗口被展示了出来")
+
+    #关闭窗口时触发
+    def closeEvent(self, QCloseEvent):
+        print("窗口被关闭了")
+
+
+    #窗口移动时触发
+    def moveEvent(self, QMoveEvent):
+        print("窗口被移动了")
+
+    #窗口尺寸改变时触发
+    def resizeEvent(self, QResizeEvent):
+        print("窗口改变了尺寸大小")
+
+    #鼠标进入控件时触发
+    def enterEvent(self, QEvent):
+        print("鼠标进来了")
+        # 设置控件背景颜色
+        self.setStyleSheet("background-color: yellow;")
+
+    #鼠标离开控件时触发
+    def leaveEvent(self, QEvent):
+        print("鼠标移开了")
+        #设置控件背景颜色
+        self.setStyleSheet("background-color: green;")
+
+
+    #鼠标按键被按下时触发，不管哪个按键按下都触发
+
+    def mousePressEvent(self, QMouseEvent):
+        #查看鼠标哪个按键被按下
+        print("鼠标被按下",QMouseEvent.button())
+
+    #松开鼠标按键时触发
+    def mouseReleaseEvent(self, QMouseEvent):
+        print("鼠标被释放")
+
+    #双击下鼠标按键时触发
+    def mouseDoubleClickEvent(self, QMouseEvent):
+        print("鼠标双击")
+
+    #按下鼠标按键，并移动鼠标时触发
+    def mouseMoveEvent(self, QMouseEvent):
+        print("鼠标移动了")
+
+    #按下键盘上按键时触发
+    # QKeyEvent
+    def keyPressEvent(self, QKeyEvent):
+        #获取哪个键盘上哪个按键被按下，得到的是ascii码
+        print("键盘上某一个按键被按下了",QKeyEvent.key())
+
+    #松开键盘按键时触发
+    def keyReleaseEvent(self, QKeyEvent):
+        print("键盘上某一个按键被释放了")
+
+
+if __name__ == '__main__':
+    import sys
+    app = QApplication(sys.argv)
+
+    window = Window()
+
+    window.show()
+
+
+
+    sys.exit(app.exec_())
